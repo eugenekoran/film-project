@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+from torch.nn import init
 import torch.nn.functional as F
 from torch import LongTensor
 from torch.autograd import Variable
@@ -29,7 +30,7 @@ class FiLMGenerator(nn.Module):
         #Get the indices of the last words in each sentence
         N, L = x.size()
         idx = LongTensor(N).fill_(L - 1)
-        x_numpy = x.data.numpy()
+        x_numpy = x.cpu().data.numpy()
         for i in range(N):
             for j in range(L - 1):
                 if x_numpy[i, j] != 0 and x_numpy[i, j + 1] == 0:
@@ -41,7 +42,7 @@ class FiLMGenerator(nn.Module):
 
         #Embed questions
         embeded = self.embedding(x)
-
+        
         #GRU
         h0 = Variable(torch.zeros(1, N, 4096).type_as(embeded.data))
         out, _ = self.gru(embeded, h0)
@@ -149,4 +150,4 @@ def init_modules(modules):
     '''
     for m in modules:
         if isinstance(m, (nn.Conv2d, nn.Linear)):
-            nn.init.kaiming_uniform(m.weight)
+            init.kaiming_uniform(m.weight)

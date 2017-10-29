@@ -25,7 +25,6 @@ def train(args):
     with open(args.vocab, 'r') as f:
         vocab = json.load(f)
     vocab_size = len(vocab['q'])
-
     with MyDataLoader(args.train_features_h5,
                       args.train_questions_h5) as train_loader, \
          MyDataLoader(args.val_features_h5,
@@ -42,6 +41,9 @@ def train(args):
             film_generator.load_state_dict(fg_state)
             filmed_net.load_state_dict(fn_state)
 
+        print ('\nFiLMGenerator: \n  {}\n\n'.format(film_generator))
+        print ('FiLMed Netowrk: \n  {}\n'.format(filmed_net))
+
         criterion = CrossEntropyLoss().cuda()
 
         fg_optimizer = Adam(film_generator.parameters(),
@@ -52,6 +54,7 @@ def train(args):
                             weight_decay=1e-5)
         t = 0
         best_accuracy = 0
+        running_loss = 0
         for epoch in range(args.epochs):
             print ('Starting Epoch {}'.format(epoch))
 
@@ -59,10 +62,10 @@ def train(args):
             filmed_net.cuda()
             film_generator.train()
             filmed_net.train()
-            running_loss = 0
 
             for batch in train_loader:
                 t += 1
+                
                 questions, feats, answers = batch
                 questions = Variable(questions.cuda())
                 feats = Variable(feats.cuda())
@@ -84,6 +87,7 @@ def train(args):
                 running_loss += loss.data[0]
                 if t % 100 == 0:
                     print (t, running_loss / 100)
+                    running_loss = 0
 
             film_generator.eval()
             filmed_net.eval()
