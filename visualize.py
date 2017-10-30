@@ -1,6 +1,7 @@
 import argparse
 import ipdb as pdb
 import numpy as np
+from string import punctuation
 import torch
 from torch.nn.functional import upsample_bilinear
 from torch.nn.modules.upsampling import Upsample, UpsamplingBilinear2d
@@ -37,7 +38,7 @@ def visualize(args):
     encoded = encode(tokens, vocab['q'])
     encoded = Variable(LongTensor(encoded).unsqueeze(0))
 
-    film_generator = FiLMGenerator(len(vocab['q']) + 1) #TODO ############
+    film_generator = FiLMGenerator(len(vocab['q']))
     filmed_net = FiLMedNet(save_layer=True)
 
     fg_state = checkpoint['fg_best_state']
@@ -61,7 +62,6 @@ def visualize(args):
     f_map = f_map - f_map.min().expand_as(f_map)
     f_map = f_map / f_map.max().expand_as(f_map)
 
-    pdb.set_trace()
     f_map = (255 * f_map).round()
     upsample = Upsample(size=torch.Size(original_img.shape[:-1]), mode='bilinear')
     channel = upsample(f_map.unsqueeze(0).unsqueeze(0))
@@ -69,7 +69,8 @@ def visualize(args):
 
     filtered_img = np.concatenate((original_img, channel), axis=2)
 
-    imsave('filtered.png', filtered_img)
+    filename = args.question.replace(' ', '_').strip(punctuation)
+    imsave(filename + '.png', filtered_img)
 
 
 
