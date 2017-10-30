@@ -151,7 +151,7 @@ def featurize(batch, model):
 
     #Get features
     features = model(batch)
-    features = features.data.cpu().numpy()
+    features = features.data.cpu().clone().numpy()
     return features
 
 def build_resnet(args):
