@@ -16,10 +16,10 @@ from utils import tokenize, create_vocab, encode
 '''
 Example usage:
 python preprocess_data.py \
- --questions_json ../data/CLEVR_v1.0/questions/CLEVR_train_questions.json \
- --image_folder ../data/CLEVR_v1.0/images/train \
+ --questions_json data/CLEVR_v1.0/questions/CLEVR_train_questions.json \
  --save_questions_h5_to data/train_questions.h5 \
- --save_vocab_to vocab.json \
+ --save_vocab_to data/vocab.json \
+ --image_folder data/CLEVR_v1.0/images/train \
  --save_features_h5_to data/train_features.h5 \
 '''
 

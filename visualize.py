@@ -13,7 +13,7 @@ from model import FiLMGenerator, FiLMedNet
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--image', default='img/CLEVR_test_0000001.png')
+parser.add_argument('--image', default='img/CLEVR_test_0000016.png')
 parser.add_argument('--question', default='How many objects are there?')
 parser.add_argument('--FiLM', default='data/checkpoint.pt')
 parser.add_argument('--model', default='resnet101')
