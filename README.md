@@ -121,18 +121,18 @@ Code was developed in Python 3.6. Training run on AWS p2.xlarge instance.
 sudo pip3 install http://download.pytorch.org/whl/cu80/torch-0.2.0.post3-cp36-cp36m-manylinux1_x86_64.whl
 ```
 
-1. Download and unpack the data (unpacked data takes 20Gb)
+2. Download and unpack the data (unpacked data takes 20Gb)
 ```
 mkdir data
 wget https://s3-us-west-1.amazonaws.com/clevr/CLEVR_v1.0.zip -O data/CLEVR_v1.0.zip
 unzip data/CLEVR_v1.0.zip -d data
 ```
-2. Preprocess the data (preprocessed data takes 63Gb). Preprocessed image features and questions are saved as h5 datasets to `/data` folder.
+3. Preprocess the data (preprocessed data takes 63Gb). Preprocessed image features and questions are saved as h5 datasets to `/data` folder.
 ```
 sh preprocess_data.sh
 ```
 
-3. Train the model
+4. Train the model
 ```
 python train.py --epochs 20
 ```
@@ -141,7 +141,7 @@ python train.py --epochs 20
  python train.py --start_from_checkpoint data/checkpoint.pt
  ```
 
-4. Create visualization. Filtered image is saved as `<question text>.png`.
+5. Create visualization. Filtered image is saved as `<question text>.png`.
 ```
 python visualize.py\
  --image data/CLEVR_v1.0/images/test/CLEVR_test_0000001.png \
