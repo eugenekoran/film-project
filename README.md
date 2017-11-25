@@ -7,7 +7,7 @@
 [![img](img/Main.png)](www.visuallyreasoningai.com)
 
 Motivation for this project was the fact that neural networks are pretty good at
-recognizing objects, they can really distinguish cats from dogs, but what we really want them to do is to understand visual information and be able to reason about it.
+recognizing objects, they can really distinguish cats from dogs, but what we really want them to do is to understand visual information and to be able to reason about it.
 
 Look at this picture.
 
@@ -18,7 +18,7 @@ Look at this picture.
 To answer to this simple question you need to know a lot about this world. You need to recognize colors and shapes, be able to count and compare. Traditional neural networks will have hard time
 trying to answer to this question.
 
-Source of this image is [CLEVR dataset](http://cs.stanford.edu/people/jcjohns/clevr/). It is diagnostic dataset created to facilitate development of artificial intelligence systems that can reason and answer questions about visual data. It consists of 100.000 images with 10 questions attached to each image. Dataset built in a way that over 835.000 questions are unique.
+Source of this image is [CLEVR dataset](http://cs.stanford.edu/people/jcjohns/clevr/). It is a diagnostic dataset created to facilitate development of artificial intelligence systems that can reason and answer questions about visual data. It consists of 100.000 images with 10 logical questions attached to each image. Dataset was built in a way that over 835.000 questions are unique.
 
 In images objects exist in 6 possible colors, 4 possible shapes and 2 materials: metal and rubber.
 
@@ -26,7 +26,7 @@ I was inspired by this research:
 
 [FiLM: Visual Reasoning with a General Conditioning Layer (2017)](https://arxiv.org/abs/1709.07871)
 
-This paper introduced new method for conditioning network architecture and received state-of-the-art result for CLEVR dataset. I decided to build this model and experiment with it trying to get even better results.
+This paper introduced new method for conditioning network architecture and got state-of-the-art result for CLEVR dataset. I decided to build this model, experiment with it and try to get even better results.
 
 ## Model
 
@@ -34,12 +34,11 @@ I have built my model in Python using Pytorch framework. On a high level archite
 
 ![Img](img/Arch.jpeg)
 
-It consists of two neural networks. Gated Recurrent Unit network (GRU) processes a question and its final hidden state is used as a conditional input to the Convolutional Neural Network, which takes image features and processes it through several (4 in this case) conditional blocks. Image features then are being processed by final classifier that outputs a softmax distribution over 32 possible final answers.
+It consists of two neural networks. Gated Recurrent Unit network (GRU) processes a question and its final hidden state is used as a conditional input to the Convolutional Neural Network, which takes image features and processes it through several (4 in this case) conditional blocks. Image features then are processed by final classifier that outputs a softmax distribution over 32 possible final answers.
 
-In my experiments I tried to use different number of conditional blocks and tried to
-use different feature extractors to get more useful representation of image features.
+In my experiments I tried to use different number of conditional blocks and tried different feature extractors to get more useful representation of image features.
 
-When I had built the model for the first time it turned out that the model needed around 72 hours of training to converge. To speed-up training I parallelized training of a single model on multiple GPUs and used varying learning rate. In the end I was able to speeded-up training of a single model up to 50%. Also I used large EC2 instance with 8 GPUs which allowed me to run several experiments at a time.
+When I had built the model for the first time it turned out that the model needed around 72 hours of training to converge. To speed-up training I parallelized training of a single model with multiple GPUs and used varying learning rate. In the end I was able to speeded-up training of a single model up to 50%. Also I used large EC2 instance with 8 GPUs which allowed me to run several experiments at a time.
 
 It turned out that the model architecture was pretty robust to the changes that I was doing and different variations of the model landed up with validation accuracy between 96 and 97 percent.
 
@@ -63,7 +62,7 @@ Albeit the fact that the model required lots of time to be trained, it is produc
 
 ## Vizualization
 
-To visualize, what my model learns, I took out the activations of the last convolutional layer and average them over all feature maps to obtain a single feature map. I upscaled this map to the size of the original image and put it on top of it as an additional layer. In this way I got this images:
+To visualize, what my model learns, I took out the activations of the last convolutional layer and average them over all the feature maps to obtain a single feature map. I upscaled this map to the size of the original image and put it on top of it as an additional layer. In this way I got this images:
 
 **Question:** Are there more balls than green things?
 **Answer:** No
@@ -78,7 +77,7 @@ most important for answering this specific questions. Highlighted areas mean tha
 
 ## Limitations
 
-The model achieves 97% accuracy for the validation set but it is biased to the types of questions that it was trained on. The model was trained on difficult multilayered questions to facilitate visual reasoning. The downside of it is that the model may fail on some simple questions that were underrepresented in the training data. Limitations of the model are:
+The model achieves 97% accuracy for the validation set but the model is biased to the types of questions that it was trained on. The model was trained on difficult multilayered questions to facilitate visual reasoning. The downside of it is that the model may fail on some simple questions that were underrepresented in the training data. Limitations of the model are:
 
 1. The model tends to produce wrong answers when it needs to count large number of objects. Generally counting of more then 5 objects is a problem. Nevertheless I have never seen the model being wrong by more than 1 item.
 
@@ -108,7 +107,7 @@ Interesting venues for future work for this project are:
 
    With respect to this problem you can train the model to answer different questions, for example to identify colors present in the image. Then you can use this information to allow users to search items with a specific color, even when this color is not the most dominant color of the item. You can use similar approach to search for items with some style features like a specific sleeve or a checkered pattern.  
 
-   I would like to admit that conditioning of image features in this project was done with text input, but it doesn't necessarily need to be done with text. Conditioning method is very general. You can use any input for conditioning and it would be exciting to try to condition images on the other images. In this way you can try to train a model able to recognize raw color patterns on the apparel images.
+   I would like to admit that conditioning of image features in this project was done with text input, but it doesn't necessarily need to be done with text. Conditioning method is very general. You can use any input for conditioning and it would be exciting to try to condition images on the other images. Interesting idea is to try to use images of raw color patterns as a conditioning input to apparel images.
 
 Thanks for reading!
 
