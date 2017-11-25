@@ -20,7 +20,7 @@ trying to answer to this question.
 
 Source of this image is [CLEVR dataset](http://cs.stanford.edu/people/jcjohns/clevr/). It is diagnostic dataset created to facilitate development of artificial intelligence systems that can reason and answer questions about visual data. It consists of 100.000 images with 10 questions attached to each image. Dataset built in a way that over 835.000 questions are unique.
 
-On images objects exist in 6 possible colors, 4 possible shapes and 2 materials: metal and rubber.
+In images objects exist in 6 possible colors, 4 possible shapes and 2 materials: metal and rubber.
 
 I was inspired by this research:
 
@@ -36,12 +36,12 @@ I have built my model in Python using Pytorch framework. On a high level archite
 
 It consists of two neural networks. Gated Recurrent Unit network (GRU) processes a question and its final hidden state is used as a conditional input to the Convolutional Neural Network, which takes image features and processes it through several (4 in this case) conditional blocks. Image features then are being processed by final classifier that outputs a softmax distribution over 32 possible final answers.
 
-In my experiments I was mainly trying to use different number of conditional blocks and trying to
+In my experiments I tried to use different number of conditional blocks and tried to
 use different feature extractors to get more useful representation of image features.
 
 When I had built the model for the first time it turned out that the model needed around 72 hours of training to converge. To speed-up training I parallelized training of a single model on multiple GPUs and used varying learning rate. In the end I was able to speeded-up training of a single model up to 50%. Also I used large EC2 instance with 8 GPUs which allowed me to run several experiments at a time.
 
-It turn out that the model architecture was pretty robust to the changes that I was doing and different variations of the model landed up with validation accuracy between 96 and 97 percent.
+It turned out that the model architecture was pretty robust to the changes that I was doing and different variations of the model landed up with validation accuracy between 96 and 97 percent.
 
 ## Web Application
 At this point I started to play with trained models and I found it to be really enjoyable. So I used Flask, ajax, HTML and JavaScript to build a web application for answering user-input questions.
@@ -67,11 +67,11 @@ To visualize, what my model learns, I took out the activations of the last convo
 
 **Question:** Are there more balls than green things?
 **Answer:** No
-![img](img/vis_0.png)
+![img](img/Vis_0.png)
 
 **Question:** What is the color of the object closest to the blue cylinders?
 **Answer:** Cyan
-![img](img/vis_1.png)
+![img](img/Vis_1.png)
 
 From this images you can see that the model was able to identify the areas of the image that are the
 most important for answering this specific questions. Highlighted areas mean that the activations inside the model, corresponding to these areas, had the largest values.
@@ -80,7 +80,7 @@ most important for answering this specific questions. Highlighted areas mean tha
 
 The model achieves 97% accuracy for the validation set but it is biased to the types of questions that it was trained on. The model was trained on difficult multilayered questions to facilitate visual reasoning. The downside of it is that the model may fail on some simple questions that were underrepresented in the training data. Limitations of the model are:
 
-1. The model tends to produce wrong answers when it needs to count large number of objects. Generally counting more then 5 objects is a problem. Nevertheless I have never seen the model being wrong by more than 1 item.
+1. The model tends to produce wrong answers when it needs to count large number of objects. Generally counting of more then 5 objects is a problem. Nevertheless I have never seen the model being wrong by more than 1 item.
 
 2. The model is biased to answering 'yes' more often than 'no' and to producing greater than zero answers for counting questions. Here is nice example of it:
 
@@ -114,7 +114,7 @@ Thanks for reading!
 
 ## Instructions
 
-Code was developed in Python 3.6. Training run on AWS p2.xlarge instance. 
+Code was developed in Python 3.6. Training run on AWS p2.xlarge instance.
 
 1. Install Pytorch
 ```
