@@ -95,6 +95,7 @@ def preprorcess_images(args):
     '''
     #Save paths to images
     paths = os.listdir(args.image_folder)
+    paths.sort()
 
     #Build a model
     print ('Building ResNet feature extractor ...')

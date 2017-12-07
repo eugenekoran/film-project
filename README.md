@@ -117,7 +117,7 @@ Code was developed in Python 3.6. Training run on AWS p2.xlarge instance.
 
 1. Install Pytorch
 ```
-sudo pip3 install http://download.pytorch.org/whl/cu80/torch-0.2.0.post3-cp36-cp36m-manylinux1_x86_64.whl
+pip3 install http://download.pytorch.org/whl/cu80/torch-0.2.0.post3-cp36-cp36m-manylinux1_x86_64.whl
 ```
 
 2. Download and unpack the data (unpacked data takes 20Gb)
