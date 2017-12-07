@@ -113,7 +113,7 @@ Thanks for reading!
 
 ## Instructions
 
-Code was developed in Python 3.6. Training run on AWS p2.xlarge instance.
+Code was developed in Python 3.6. Training ran on AWS p2.xlarge instance.
 
 1. Install Pytorch
 ```
